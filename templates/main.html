@@ -1,14 +1,7 @@
-<html>
-<header>
-    <h1>Celebrities</h1>
-</header>
-<body>
+{% extends "layout.html" %}
+{% block content %}
     <form action="{{ request.path }}" method="post">
         <textarea name="names" rows="10" cols="50" placeholder="Put each name on a separate line"></textarea>
         <button type="submit" id="submit">Submit</button>
     </form>
-</body>
-<footer>
-    <h4>By Micheal and Andrew Bowling</h4>
-</footer>
-</html>
+{% endblock %}

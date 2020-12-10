@@ -1,6 +1,7 @@
 import os
 import redis
 import flask
+import random
 
 app = flask.Flask(__name__)
 redis_conn = redis.from_url(os.environ['REDIS_URL'], decode_responses=True)
@@ -44,9 +45,16 @@ def names(room_id):
       room.add_name(name)
     return flask.redirect('play')
 
-@app.route('/<room_id>/play')
+@app.route('/<room_id>/play', methods=['GET', 'POST'])
 def play(room_id):
-    return flask.render_template('game.html')
+  if flask.request.method == 'GET':
+    room = Room(room_id)
+    names_left = list(room.names_left)
+    random.shuffle(names_left)
+    return flask.render_template('game.html', names_left=names_left)
+  else:
+    print(flask.request.form)
+    return 'YAY!'
 
 if __name__ == '__main__':
-    app.run()
+  app.run()
