@@ -1,62 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
+<div id="play_area">
 <div id="name_to_guess">
 </div>
-<input type="button" onclick="next_name(passed=true)" value="Pass">
-<input type="button" onclick="next_name(passed=false)"
-value="Correct">
-<input type="button" onclick="turn_over()" value="Turn Over">
+
+<input type="button" class="btn btn-secondary" onclick="next_name(correct=false)" value="Pass">
+<input type="button" class="btn btn-success" onclick="next_name(correct=true)" value="Correct">
+<input type="button" class="btn btn-primary" onclick="turn_over()" value="Turn Over">
+</div>
+
+<div id="end_of_turn_area" class="hidden">
+  <table>
+    <tr><td></td><td><label class="switch"><input type="checkbox" id="toggle"><div class="slider round"></div></label></td></tr>
+  </table>
+  <input type="button" class="btn btn-primary" onclick="submit_answers()" value="Submit">
+</div>
+  
 {% endblock %}
 
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{ super() }}
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 <script>
 var names_left = {{ names_left|safe }};
-var names_correct = [];
-var names_passed = [];
-
-$("#name_to_guess").text(names_left.pop());
-
-function postForm(path, params, method) {
-    method = method || 'post';
-
-    var form = document.createElement('form');
-    form.setAttribute('method', method);
-    form.setAttribute('action', path);
-
-    for (var key in params) {
-        if (params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement('input');
-            hiddenField.setAttribute('type', 'hidden');
-            hiddenField.setAttribute('name', key);
-            hiddenField.setAttribute('value', params[key]);
-
-            form.appendChild(hiddenField);
-        }
-    }
-
-    document.body.appendChild(form);
-    form.submit();
-}
-
-function next_name(passed) {
-  if (passed) {
-    names_passed.push($("#name_to_guess").text());
-  } else {
-    names_correct.push($("#name_to_guess").text());
-  }
-  console.log($("#name_to_guess").text());
-  console.log(names_passed); 
-  console.log(names_correct); 
-  $("#name_to_guess").text(names_left.pop());
-}
-
-function turn_over() {
-  names_passed.push($("#name_to_guess").text());
-  postForm( '{{ request.path }}', {'names_passed': names_passed,
-                                   'names_correct': names_correct});
-}
-
+start("{{ url_for('play', room_id=room_id) }}",
+      "{{ url_for('lobby', room_id=room_id) }}");
 </script>
 {% endblock %}
 
