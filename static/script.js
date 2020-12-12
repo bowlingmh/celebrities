@@ -2,11 +2,23 @@ var names_left = [];
 var names_done = [];
 var submit_url = "";
 var after_submit_url = "";
+var time_left = 30;
+var countdown_id = null;
+
+function countdown() {
+    time_left--;
+     if (time_left <= 0) {
+	turn_over();
+     } else {
+	 $("#timer").text(time_left.toString() + "s")
+     }
+}
 
 function start(_submit_url, _after_submit_url) {
     submit_url = _submit_url;
     after_submit_url = _after_submit_url;
     $("#name_to_guess").text(names_left.pop());
+    countdown_id = setInterval(countdown, 1000);
 }
 
 function next_name(correct) {
@@ -20,6 +32,9 @@ function next_name(correct) {
 }
 
 function turn_over() {
+    clearInterval(countdown_id);
+    countdown_id = null;
+    
     if ($("#name_to_guess").text() != "") {
 	names_done.push([$("#name_to_guess").text(), false]);
     }
