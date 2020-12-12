@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-    <form action="{{ request.path }}" method="post">
-        <textarea name="names" rows="10" cols="50" placeholder="Put each name on a separate line"></textarea>
-        <button type="submit" id="submit">Submit</button>
-    </form>
+<div id="status_board">
+<div><div>Names Left</div><div>{{ room.names_left|length }}</div></div>
+<div><div>Names Guessed</div><div>{{ room.names_guessed|length }}</div></div>
+</div>
+<a class="btn btn-primary" href="{{ url_for('play', room_id=room.id)}}"> Start Turn </a>
+<a class="btn btn-secondary" href="{{ url_for('names', room_id=room.id)}}"> Add Names </a>
+<a class="btn btn-secondary" href="{{ url_for('newgame', room_id=room.id)}}"> New Game </a>
 {% endblock %}

@@ -15,7 +15,6 @@
   </table>
   <input type="button" class="btn btn-primary" onclick="submit_answers()" value="Submit">
 </div>
-  
 {% endblock %}
 
 {% block scripts %}
@@ -23,8 +22,8 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <script>
 var names_left = {{ names_left|safe }};
-start("{{ url_for('play', room_id=room_id) }}",
-      "{{ url_for('lobby', room_id=room_id) }}");
+start("{{ url_for('play', room_id=room.id) }}",
+      "{{ url_for('main', room_id=room.id) }}");
 </script>
 {% endblock %}
 
