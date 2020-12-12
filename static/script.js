@@ -2,7 +2,7 @@ var names_left = [];
 var names_done = [];
 var submit_url = "";
 var after_submit_url = "";
-var time_left = 5;
+var time_left = 30;
 var countdown_id = null;
 
 function countdown() {
