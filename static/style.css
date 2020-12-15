@@ -1,5 +1,13 @@
 .hidden { display: none; }
 
+h1 {
+    text-align: center;
+}
+h4 {
+    text-align: center;
+    margin-top: 20px;
+}
+
 #name_to_guess {
     font-size: 500%;
     text-align: center;

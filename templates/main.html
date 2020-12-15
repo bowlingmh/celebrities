@@ -3,8 +3,10 @@
 <div id="status_board">
 <div><div>Names Left</div><div>{{ room.names_left|length }}</div></div>
 <div><div>Names Guessed</div><div>{{ room.names_guessed|length }}</div></div>
+<div><div>Round</div><div>{{ room.round }}</div></div>
 </div>
-<a class="btn btn-primary" href="{{ url_for('play', room_id=room.id)}}"> Start Turn </a>
+
+<a class="btn {{ "btn-outline-primary disabled" if room.round > 3 else "btn-primary" }}" href="{{ url_for('play', room_id=room.id)}}"> Start Turn </a>
 <a class="btn btn-secondary" href="{{ url_for('names', room_id=room.id)}}"> Add Names </a>
 <a class="btn btn-secondary" href="{{ url_for('newgame', room_id=room.id)}}"> New Game </a>
 {% endblock %}

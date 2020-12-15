@@ -9,6 +9,8 @@ redis_conn = redis.from_url(os.environ['REDIS_URL'], decode_responses=True)
 class Room:
   def __init__(self, room_id):
     self.id = room_id
+    if redis_conn.get(f"{self.id}:round") is None:
+      redis_conn.set(f"{self.id}:round", "1")
 
   @property
   def names_left(self):
@@ -26,6 +28,13 @@ class Room:
                      f"{self.id}:names_guessed",
                      name)
 
+  @property
+  def round(self):
+    return int(redis_conn.get(f"{self.id}:round"))
+
+  def next_round(self):
+    redis_conn.incr(f"{self.id}:round")
+
   def reset(self):
     redis_conn.sunionstore(f"{self.id}:names_left",
                            f"{self.id}:names_left",
@@ -36,6 +45,7 @@ class Room:
 
   def restart(self):
     redis_conn.delete(f"{self.id}:names_guessed", f"{self.id}:names_left")
+    redis_conn.set(f"{self.id}:round", "1")
 
 @app.route('/<room_id>', methods=['GET'])
 def main(room_id):
@@ -67,7 +77,8 @@ def play(room_id):
 
     if not room.names_left:
       room.reset()
-      
+      room.next_round()
+
     return '', 200
 
 @app.route('/<room_id>/newgame')
