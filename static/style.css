@@ -43,6 +43,15 @@ h4 {
     font-size: 200%;
 }
 
+#names {
+    margin-bottom: 20px;
+}
+
+#controls>a {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 #timer {
     font-size: 200%;
     margin: 10px;

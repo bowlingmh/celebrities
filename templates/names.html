@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
     <form action="{{ request.path }}" method="post">
-        <textarea name="names" rows="10" cols="50" placeholder="Put each name on a separate line"></textarea>
-        <button type="submit" id="submit">Submit</button>
+        <div><textarea name="names" id="names" rows="5" cols="50" placeholder="Put each name on a separate line"></textarea></div>
+        <div><button class="btn btn-primary" type="submit" id="submit">Submit</button></div>
     </form>
 {% endblock %}
+
