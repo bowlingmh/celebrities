@@ -6,6 +6,28 @@ import random
 app = flask.Flask(__name__)
 redis_conn = redis.from_url(os.environ['REDIS_URL'], decode_responses=True)
 
+instructions = [
+    """\
+<ol>
+<li> No passing
+<li> Say anything, hum, gesture
+<li> No words in the name or rhyming clues
+<li> Any number of guesses
+</ol>
+""", """\
+<ol>
+<li> Passing allowed, cannot revisit names
+<li> Say a single word, hum, gesture
+<li> One guess allowed
+</ol>
+""", """\
+<ol>
+<li> Passing allowed, cannot revisit names
+<li> No words; only humming, sound effects, gestures
+<li> One guess allowed
+</ol>
+""" ]
+
 class Room:
   def __init__(self, room_id):
     self.id = room_id
@@ -50,7 +72,7 @@ class Room:
 @app.route('/<room_id>', methods=['GET'])
 def main(room_id):
   room = Room(room_id)
-  return flask.render_template('main.html', room=room)
+  return flask.render_template('main.html', room=room, instructions=instructions[room.round-1])
     
 @app.route('/<room_id>/names', methods=['GET', 'POST'])
 def names(room_id):

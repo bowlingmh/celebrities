@@ -11,4 +11,8 @@
 <a class="btn btn-secondary" href="{{ url_for('names', room_id=room.id)}}"> Add Names </a>
 <a class="btn {{ "btn-outline-danger disabled" if room.round < 4 else "btn-danger" }}" href="{{ url_for('newgame', room_id=room.id)}}" > New Game </a>
 </span>
+
+<div id="instructions">
+  {{ instructions|safe }}
+</div>
 {% endblock %}

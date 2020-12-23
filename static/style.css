@@ -10,6 +10,18 @@ h4 {
     font-size: 3vmin;
 }
 
+#instructions {
+    max-width: 700px;
+    width: 50vw;
+    margin-top: 20px;
+}
+
+#instructions>ol {
+    list-style-position: inside;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
 #name_to_guess {
     font-size: 10vmin;
     text-align: center;
