@@ -9,6 +9,7 @@ redis_conn = redis.from_url(os.environ['REDIS_URL'], decode_responses=True)
 instructions = [
     """\
 <ol>
+<li> <b>Round 1</b>
 <li> No passing
 <li> Say anything, hum, gesture
 <li> No words in the name or rhyming clues
@@ -16,17 +17,24 @@ instructions = [
 </ol>
 """, """\
 <ol>
+<li> <b> Round 2</b>
 <li> Passing allowed, cannot revisit names
 <li> Say a single word, hum, gesture
 <li> One guess allowed
 </ol>
 """, """\
 <ol>
+<li> <b> Round 3</b>
 <li> Passing allowed, cannot revisit names
 <li> No words; only humming, sound effects, gestures
 <li> One guess allowed
 </ol>
-""" ]
+""", """\
+<ol>
+<li> <b>Game Over</b>
+</ol>
+"""
+ ]
 
 class Room:
   def __init__(self, room_id):
